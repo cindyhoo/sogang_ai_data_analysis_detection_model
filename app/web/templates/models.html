@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}{{ t("nav.models") }}{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <h1>{{ t("models.title") }}</h1>
+    <p class="sub">{{ t("models.sub") }}</p>
+  </div>
+  <div class="actions">
+    <select id="filter-status" style="width:auto">
+      <option value="">{{ t("models.filter_all") }}</option><option value="ready">{{ t("state.ready") }}</option><option value="training">{{ t("state.training") }}</option>
+      <option value="cancelled">{{ t("state.cancelled") }}</option><option value="failed">{{ t("state.failed") }}</option>
+    </select>
+    <button class="btn" id="btn-compare" disabled>{{ t("models.compare_selected") }}</button>
+    <a class="btn primary" href="/train">{{ t("common.new_training") }}</a>
+  </div>
+</div>
+<section class="card"><div id="model-table" class="table-wrap"><div class="muted">{{ t("common.loading") }}</div></div></section>
+<section class="card hidden" id="compare-card">
+  <div class="row-between"><h2>{{ t("models.compare") }}</h2><button class="btn small" id="btn-compare-close">{{ t("common.close") }}</button></div>
+  <div id="compare-table" class="table-wrap"></div>
+  <div class="grid g2" style="margin-top:12px">
+    <div><h3>val_acc</h3><div id="compare-acc"></div></div>
+    <div><h3>val_loss</h3><div id="compare-loss"></div></div>
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}<script src="{{ asset('js/models.js') }}"></script>{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}{{ t("nav.dashboard") }}{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <h1>{{ t("nav.dashboard") }}</h1>
+    <p class="sub">{{ t("dash.sub") }}</p>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="/train">{{ t("common.new_training") }}</a>
+    <a class="btn" href="/test">{{ t("common.webcam_test") }}</a>
+  </div>
+</div>
+<div class="grid g2">
+  <section class="card"><h2>{{ t("dash.system") }}</h2><div id="sys" class="muted">{{ t("common.loading") }}</div></section>
+  <section class="card"><h2>{{ t("dash.active_jobs") }}</h2><div id="active-jobs" class="muted">{{ t("common.loading") }}</div></section>
+</div>
+<section class="card">
+  <div class="row-between"><h2>{{ t("dash.recent_models") }}</h2><a href="/models" class="small">{{ t("dash.view_all") }}</a></div>
+  <div id="recent-models" class="table-wrap"></div>
+</section>
+<section class="card">
+  <h2>{{ t("dash.recent_jobs") }}</h2>
+  <div id="recent-jobs" class="table-wrap"></div>
+</section>
+{% endblock %}
+{% block scripts %}<script src="{{ asset('js/dashboard.js') }}"></script>{% endblock %}

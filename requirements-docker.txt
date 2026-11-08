@@ -1,0 +1,3 @@
+# web 컨테이너와 대체 경로(Docker CPU trainer) 컨테이너
+-r requirements-common.txt
+tensorflow==2.18.1      # ★ linux/aarch64 휠 (CPU)

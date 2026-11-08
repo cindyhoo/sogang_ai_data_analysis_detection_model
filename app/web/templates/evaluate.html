@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}{{ t("nav.evaluate") }}{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <h1>{{ t("nav.evaluate") }}</h1>
+    <p class="sub">{{ t("eval.sub") }}</p>
+  </div>
+</div>
+<section class="card">
+  <div class="form-grid" style="grid-template-columns:110px minmax(0,1fr) 110px minmax(0,1fr)">
+    <label for="sel-model">{{ t("md.model") }}</label><select id="sel-model"></select>
+    <label>{{ t("eval.data") }}</label><div id="eval-data" class="muted">–</div>
+    <label for="sel-eval">{{ t("eval.result") }}</label><select id="sel-eval"></select>
+    <span></span>
+    <div class="actions"><button class="btn primary" id="btn-run">{{ t("common.run_eval") }}</button><span id="run-status" class="small muted"></span></div>
+  </div>
+</section>
+<div id="result" class="hidden">
+  <section class="card"><h2>{{ t("eval.metrics") }}</h2><div class="stats" id="r-stats"></div><p class="small muted" id="r-meta" style="margin-bottom:0"></p></section>
+  <div class="grid g2">
+    <section class="card"><h2>Confusion matrix</h2><img id="r-cm" class="figure-img" alt="confusion matrix">
+      <p class="small muted">{{ t("eval.cm_note") }}</p></section>
+    <section class="card"><h2>Calibration (reliability diagram)</h2><img id="r-rel" class="figure-img" alt="reliability diagram">
+      <p class="small muted">{{ t("eval.rel_note") }}</p></section>
+  </div>
+  <div class="grid g3">
+    <section class="card"><h2>{{ t("eval.confused") }}</h2><div id="r-confused" class="table-wrap"></div></section>
+    <section class="card"><h2>{{ t("eval.best") }}</h2><div id="r-best" class="table-wrap"></div></section>
+    <section class="card"><h2>{{ t("eval.worst") }}</h2><div id="r-worst" class="table-wrap"></div></section>
+  </div>
+  <section class="card">
+    <div class="row-between"><h2>{{ t("eval.per_class") }}</h2><input type="text" id="pc-filter" placeholder="{{ t('eval.class_search') }}" style="max-width:240px"></div>
+    <div id="r-perclass" class="table-wrap" style="max-height:480px;overflow:auto"></div>
+  </section>
+  <section class="card"><h2>{{ t("eval.mis") }}</h2><div id="r-mis" class="gallery"></div></section>
+  <section class="card">
+    <h2>{{ t("eval.mcnemar") }}</h2>
+    <p class="small muted">{{ t("eval.mcnemar_note") }}</p>
+    <div class="form-grid" style="grid-template-columns:110px minmax(0,1fr) 110px minmax(0,1fr)">
+      <label>{{ t("eval.model_a") }}</label><div id="mc-a" class="muted">{{ t("eval.model_a_hint") }}</div>
+      <label for="mc-b">{{ t("eval.model_b") }}</label><select id="mc-b"></select>
+    </div>
+    <div class="actions" style="margin-top:12px"><button class="btn" id="btn-mcnemar">{{ t("eval.run_test") }}</button></div>
+    <div id="mc-result" style="margin-top:12px"></div>
+  </section>
+</div>
+{% endblock %}
+{% block scripts %}<script src="{{ asset('js/evaluate.js') }}"></script>{% endblock %}

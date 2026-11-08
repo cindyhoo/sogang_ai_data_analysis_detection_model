@@ -1,0 +1,13 @@
+# web·trainer 공통 의존성. ★ 표시는 macOS(trainer)와 Linux(web 컨테이너)에서 반드시 같은 버전.
+keras==3.15.1           # ★
+numpy==2.0.2            # ★
+h5py==3.12.1            # ★ (Keras 모델 저장 형식에 사용)
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+jinja2==3.1.5
+python-multipart==0.0.20
+httpx==0.28.1
+pillow==11.1.0
+scikit-learn==1.6.1
+matplotlib==3.10.0
+psutil==7.0.0            # 가용 메모리 확인 (ipykernel이 7 이상 요구)

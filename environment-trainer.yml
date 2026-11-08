@@ -1,0 +1,13 @@
+# trainer(macOS 네이티브) conda 환경 정의
+# - conda로는 python, pip, ipykernel만 설치하고 나머지는 모두 pip로 설치한다 (제안서 §11.5).
+# - nodefaults: Anaconda defaults 채널(이용약관 적용 가능)을 쓰지 않고 conda-forge만 사용.
+name: cnn-poc-trainer
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - python=3.11
+  - pip
+  - ipykernel
+  - pip:
+      - -r requirements-trainer.txt

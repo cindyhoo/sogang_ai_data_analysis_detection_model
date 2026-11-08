@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="{{ html_lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}CNN PoC{% endblock %} · CIFAR-100 CNN PoC</title>
+  <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/"><span class="logo">◧</span> CIFAR-100 CNN PoC</a>
+  <nav class="nav">
+    {% for key, href in [("dashboard", "/"), ("datasets", "/datasets"), ("train", "/train"), ("models", "/models"), ("evaluate", "/evaluate"), ("test", "/test")] %}
+    <a href="{{ href }}" class="{{ 'active' if active == key else '' }}">{{ t("nav." ~ key) }}</a>
+    {% endfor %}
+  </nav>
+  <label class="lang-switch" title="{{ t('nav.language') }}">
+    <span aria-hidden="true">🌐</span>
+    <select id="lang-select" aria-label="{{ t('nav.language') }}">
+      {% for code, label in langs.items() %}<option value="{{ code }}"{{ ' selected' if code == lang else '' }}>{{ label }}</option>{% endfor %}
+    </select>
+  </label>
+  <a id="trainer-badge" class="badge muted" href="/" title="{{ t('badge.title') }}">{{ t("badge.checking") }}</a>
+</header>
+<div id="global-banner" class="banner warn hidden"></div>
+<main class="container">
+  {% block content %}{% endblock %}
+</main>
+<div id="toast" class="toast hidden"></div>
+<script>window.I18N_BOOT = {{ i18n_boot | tojson }};</script>
+<script src="{{ asset('js/common.js') }}"></script>
+<script src="{{ asset('js/charts.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

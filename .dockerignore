@@ -1,0 +1,9 @@
+storage/
+.run/
+.venv-trainer/
+notebooks/
+docs/
+.env
+**/__pycache__/
+**/*.pyc
+.DS_Store

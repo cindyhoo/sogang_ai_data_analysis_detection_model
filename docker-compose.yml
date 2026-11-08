@@ -1,0 +1,35 @@
+name: cnn-poc
+
+x-base: &base
+  build: .
+  platform: linux/arm64
+  env_file: .env
+  volumes:
+    - ./storage:/storage
+    - ./app:/srv/app            # (선택) 개발 중 코드 마운트. 재시작하면 반영
+  restart: unless-stopped
+
+services:
+  web:
+    <<: *base
+    command: uvicorn app.web.main:app --host 0.0.0.0 --port 8000
+    environment:
+      # 기본: host(macOS)에서 네이티브로 도는 trainer. docker 모드에서는 run.sh가 http://trainer:8001로 바꿈
+      TRAINER_URL: ${TRAINER_URL:-http://host.docker.internal:8001}
+      TRAINER_TOKEN: ${TRAINER_TOKEN:-}
+    ports:
+      - "127.0.0.1:8000:8000"   # localhost에서만 접근
+    mem_limit: 1536m
+
+  # 대체 경로 2 (§11.7): 네이티브 환경을 쓸 수 없을 때만 TRAINER_MODE=docker로 실행
+  trainer:
+    <<: *base
+    profiles: ["docker-trainer"]
+    command: uvicorn app.trainer.main:app --host 0.0.0.0 --port 8001
+    environment:
+      KERAS_HOME: /storage/keras
+      TRAINER_DEVICE: cpu
+      TRAINER_ENV: docker
+    expose:
+      - "8001"                  # 컨테이너 내부망 전용
+    mem_limit: 2560m

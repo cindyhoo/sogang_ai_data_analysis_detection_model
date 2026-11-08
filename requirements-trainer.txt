@@ -1,0 +1,4 @@
+# macOS 네이티브 trainer (conda 환경 또는 venv에서 이 파일로 설치)
+-r requirements-common.txt
+tensorflow==2.18.1      # ★ macOS arm64 휠. tensorflow-metal 1.2.0이 지원하는 버전
+tensorflow-metal==1.2.0 # Metal GPU 플러그인

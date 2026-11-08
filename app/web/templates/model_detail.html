@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}{{ t("md.title") }}{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <div class="small"><a href="/models">{{ t("md.back") }}</a></div>
+    <h1 id="m-name">{{ t("md.model") }}</h1>
+    <p class="sub mono" id="m-id">{{ model_id }}</p>
+  </div>
+  <div class="actions" id="m-actions"></div>
+</div>
+<div class="grid g-side">
+  <div>
+    <section class="card">
+      <h2>{{ t("md.edit") }}</h2>
+      <div class="form-grid">
+        <label for="e-name">{{ t("common.name") }}</label><input id="e-name" type="text" maxlength="80">
+        <label for="e-tags">{{ t("md.tags") }}</label><input id="e-tags" type="text" class="tag-input" placeholder="{{ t('md.tags_ph') }}">
+        <label for="e-memo">{{ t("md.memo") }}</label><textarea id="e-memo" maxlength="2000"></textarea>
+        <label>{{ t("md.default_model") }}</label><label class="check-row"><input type="checkbox" id="e-default"> {{ t("md.default_hint") }}</label>
+      </div>
+      <div class="actions" style="margin-top:12px"><button class="btn primary" id="btn-save">{{ t("common.save") }}</button></div>
+    </section>
+    <section class="card"><h2>{{ t("md.info") }}</h2><dl class="kv" id="m-info"></dl></section>
+    <section class="card"><h2>{{ t("md.hparams") }}</h2><dl class="kv" id="m-hparams"></dl></section>
+  </div>
+  <div>
+    <section class="card">
+      <h2>{{ t("md.curves") }}</h2>
+      <h3>loss</h3><div id="chart-loss"></div>
+      <h3>{{ t("common.accuracy") }}</h3><div id="chart-acc"></div>
+    </section>
+    <section class="card"><h2>{{ t("md.evals") }}</h2><div id="m-evals" class="table-wrap"></div></section>
+    <section class="card"><h2>model.summary()</h2><pre id="m-summary"></pre></section>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>const MODEL_ID = {{ model_id | tojson }};</script>
+<script src="{{ asset('js/model_detail.js') }}"></script>
+{% endblock %}

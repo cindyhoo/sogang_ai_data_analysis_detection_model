@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}{{ t("nav.datasets") }}{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <h1>{{ t("nav.datasets") }}</h1>
+    <p class="sub">{{ t("ds.sub_html") | safe }}</p>
+  </div>
+</div>
+<div id="ds-list"><div class="card muted">{{ t("common.loading") }}</div></div>
+{% endblock %}
+{% block scripts %}<script src="{{ asset('js/datasets.js') }}"></script>{% endblock %}

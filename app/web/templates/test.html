@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}{{ t("common.webcam_test") }}{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <h1>{{ t("common.webcam_test") }}</h1>
+    <p class="sub">{{ t("test.sub") }}</p>
+  </div>
+  <div class="actions">
+    <label for="sel-model" class="muted">{{ t("md.model") }}</label>
+    <select id="sel-model" style="min-width:320px"></select>
+  </div>
+</div>
+<div id="train-banner" class="banner info hidden">{{ t("test.train_banner") }}</div>
+<div class="grid g2">
+  <section class="card">
+    <div class="cam-wrap" id="cam-wrap">
+      <video id="video" class="mirror" playsinline muted></video>
+      <div id="roi" class="cam-roi hidden"><span>{{ t("test.roi_label") }}</span></div>
+      <div id="cam-placeholder" class="cam-placeholder">{{ t("test.placeholder_html") | safe }}</div>
+    </div>
+    <div class="actions" style="margin-top:12px">
+      <button class="btn primary" id="btn-start">{{ t("test.start") }}</button>
+      <button class="btn" id="btn-stop" disabled>{{ t("test.stop") }}</button>
+      <button class="btn" id="btn-snap" disabled>{{ t("test.snapshot") }}</button>
+    </div>
+    <div class="form-grid" style="margin-top:14px">
+      <label for="sel-interval">{{ t("test.interval") }}</label>
+      <select id="sel-interval"><option value="250">250ms</option><option value="400" selected>400ms</option><option value="700">700ms</option><option value="1000">1000ms</option></select>
+      <label for="roi-ratio">{{ t("test.roi_size") }}</label>
+      <div class="row-between"><input type="range" id="roi-ratio" min="40" max="100" value="70" style="flex:1"><span id="roi-val" class="small muted">70%</span></div>
+      <label>{{ t("test.options") }}</label>
+      <div class="check-row">
+        <label><input type="checkbox" id="opt-smooth" checked> {{ t("test.smooth") }}</label>
+        <label><input type="checkbox" id="opt-mirror" checked> {{ t("test.mirror") }}</label>
+      </div>
+    </div>
+    <div id="cam-error" class="banner warn hidden" style="margin-top:12px;border-radius:8px"></div>
+  </section>
+  <section class="card">
+    <h2>{{ t("test.result") }}</h2>
+    <div class="row-between" style="align-items:flex-start">
+      <div>
+        <div class="small muted">{{ t("test.input") }}</div>
+        <img id="input-preview" class="input-preview" alt="">
+      </div>
+      <div class="stats" style="flex:1;max-width:330px">
+        <div class="stat"><div class="k">{{ t("test.latency") }}</div><div class="v" id="s-latency">–</div><div class="s">{{ t("test.latency_sub") }}</div></div>
+        <div class="stat"><div class="k">{{ t("test.fps") }}</div><div class="v" id="s-fps">–</div><div class="s" id="s-rtt">{{ t("test.rtt_none") }}</div></div>
+      </div>
+    </div>
+    <div id="top5" style="margin-top:16px"><div class="empty">{{ t("test.top5_empty") }}</div></div>
+    <p class="small muted" id="pred-note"></p>
+    <h3>{{ t("test.snapshots") }}</h3>
+    <div id="snaps" class="gallery"><div class="empty small">{{ t("test.none_yet") }}</div></div>
+  </section>
+</div>
+{% endblock %}
+{% block scripts %}<script src="{{ asset('js/webcam.js') }}"></script>{% endblock %}

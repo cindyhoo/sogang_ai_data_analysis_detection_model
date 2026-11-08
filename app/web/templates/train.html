@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block title %}{{ t("nav.train") }}{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <h1>{{ t("nav.train") }}</h1>
+    <p class="sub">{{ t("train.sub_html") | safe }}</p>
+  </div>
+</div>
+<div class="grid g-side">
+  <section class="card">
+    <h2>{{ t("train.settings") }}</h2>
+    <form id="train-form" class="form-grid" autocomplete="off">
+      <label for="f-name">{{ t("train.f_name") }}</label>
+      <input id="f-name" name="name" type="text" maxlength="80" placeholder="{{ t('train.f_name_ph') }}">
+      <div class="hint">{{ t("train.hint.name") }}</div>
+
+      <label for="f-dataset">{{ t("common.dataset") }}</label>
+      <select id="f-dataset" name="dataset"></select>
+      <div class="hint">{{ t("train.hint.dataset") }}</div>
+
+      <label>{{ t("common.arch") }}</label>
+      <div><b>xception_mini</b> <span class="muted small">{{ t("train.arch_fixed") }}</span></div>
+      <div class="hint">{{ t("train.hint.arch") }}</div>
+
+      <label>width</label>
+      <div class="radio-row">
+        <label><input type="radio" name="width" value="0.5"> 0.5</label>
+        <label><input type="radio" name="width" value="0.75"> 0.75</label>
+        <label><input type="radio" name="width" value="1.0" checked> 1.0</label>
+      </div>
+      <div class="hint">{{ t("train.hint.width") }}</div>
+
+      <label for="f-epochs">epochs</label>
+      <input id="f-epochs" name="epochs" type="number" min="1" max="100" value="25">
+      <div class="hint">{{ t("train.hint.epochs") }}</div>
+
+      <label for="f-batch">batch size</label>
+      <select id="f-batch" name="batch_size"><option>32</option><option>64</option><option selected>128</option><option>256</option></select>
+      <div class="hint">{{ t("train.hint.batch") }}</div>
+
+      <label for="f-lr">learning rate</label>
+      <input id="f-lr" name="lr" type="number" min="0.00001" max="0.01" step="any" value="0.0003">
+      <div class="hint">{{ t("train.hint.lr") }}</div>
+
+      <label for="f-dropout">dropout</label>
+      <input id="f-dropout" name="dropout" type="number" min="0" max="0.6" step="0.05" value="0.25">
+      <div class="hint">{{ t("train.hint.dropout") }}</div>
+
+      <label>{{ t("common.augment") }}</label>
+      <div class="check-row">
+        <label><input type="checkbox" name="augment" value="flip" checked> flip</label>
+        <label><input type="checkbox" name="augment" value="rotation" checked> rotation(0.1)</label>
+        <label><input type="checkbox" name="augment" value="translation"> translation</label>
+      </div>
+      <div class="hint">{{ t("train.hint.augment") }}</div>
+
+      <label for="f-val">{{ t("common.val_split") }}</label>
+      <input id="f-val" name="val_split" type="number" min="0.05" max="0.2" step="0.01" value="0.1">
+      <div class="hint">{{ t("train.hint.val") }}</div>
+
+      <label for="f-subset">train subset</label>
+      <input id="f-subset" name="train_subset" type="number" min="0.1" max="1" step="0.05" value="1.0">
+      <div class="hint">{{ t("train.hint.subset") }}</div>
+
+      <label for="f-patience">early stopping</label>
+      <input id="f-patience" name="patience" type="number" min="0" max="20" value="5">
+      <div class="hint">{{ t("train.hint.patience") }}</div>
+
+      <label for="f-seed">seed</label>
+      <input id="f-seed" name="seed" type="number" min="0" value="1337">
+      <div class="hint">{{ t("train.hint.seed") }}</div>
+
+      <label for="f-device">{{ t("common.train_device") }}</label>
+      <select id="f-device" name="device"><option value="auto">{{ t("train.device_auto") }}</option><option value="gpu">gpu (Metal)</option><option value="cpu">cpu</option></select>
+      <div class="hint">{{ t("train.hint.device") }}</div>
+    </form>
+    <div class="actions" style="margin-top:16px">
+      <button class="btn" id="btn-demo" type="button">{{ t("train.demo") }}</button>
+      <button class="btn" id="btn-reset" type="button">{{ t("train.reset") }}</button>
+      <button class="btn primary" id="btn-start" type="button">{{ t("train.start") }}</button>
+    </div>
+    <p class="small muted" style="margin-bottom:0">{{ t("train.demo_note") }}</p>
+  </section>
+
+  <section class="card" id="progress-card">
+    <div class="row-between">
+      <h2 id="p-title">{{ t("train.progress") }}</h2>
+      <div class="actions"><span id="p-state"></span><button class="btn danger small hidden" id="btn-cancel">{{ t("train.cancel") }}</button></div>
+    </div>
+    <div id="p-empty" class="empty">{{ t("train.empty") }}</div>
+    <div id="p-body" class="hidden">
+      <div class="small muted" id="p-meta"></div>
+      <div style="margin:10px 0" id="p-bar"></div>
+      <div class="stats" id="p-stats"></div>
+      <h3>loss</h3><div id="chart-loss"></div>
+      <h3>{{ t("common.accuracy") }}</h3><div id="chart-acc"></div>
+      <h3>{{ t("train.log") }}</h3><pre id="p-log"></pre>
+    </div>
+  </section>
+</div>
+{% endblock %}
+{% block scripts %}<script src="{{ asset('js/train.js') }}"></script>{% endblock %}
